@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An Ordinary Beginning — A Journey Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Karla:wght@400;500;600&family=Noto+Serif+Devanagari:wght@500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --paper:#FBF2E3;
+    --paper-raised:#FFFBF3;
+    --ink:#2B2318;
+    --muted:#8C7F68;
+    --pine:#2E5C4E;
+    --pine-soft:#E3EEE9;
+    --gold:#C99A3D;
+    --rose:#A8524A;
+    --rose-soft:#F3E3DF;
+    --path-color:#D8C9AC;
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper:#181510;
+      --paper-raised:#211D17;
+      --ink:#F1E9D8;
+      --muted:#A79A82;
+      --pine:#83C0A9;
+      --pine-soft:#213029;
+      --gold:#E3B463;
+      --rose:#DE9186;
+      --rose-soft:#332420;
+      --path-color:#3C362C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#181510;
+    --paper-raised:#211D17;
+    --ink:#F1E9D8;
+    --muted:#A79A82;
+    --pine:#83C0A9;
+    --pine-soft:#213029;
+    --gold:#E3B463;
+    --rose:#DE9186;
+    --rose-soft:#332420;
+    --path-color:#3C362C;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Karla', -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body[data-lang="hi"], body[data-lang="mr"]{
+    font-family:'Noto Sans Devanagari','Karla',sans-serif;
+  }
+
+  h1,h2,.headline-font{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  body[data-lang="hi"] h1, body[data-lang="hi"] h2, body[data-lang="hi"] .headline-font,
+  body[data-lang="mr"] h1, body[data-lang="mr"] h2, body[data-lang="mr"] .headline-font{
+    font-family:'Noto Serif Devanagari','Fraunces',serif;
+    font-weight:700;
+    letter-spacing:0;
+  }
+
+  .icon{width:30px;height:30px;display:block;}
+
+  /* ---------- Language switcher ---------- */
+  .lang-switch{
+    position:fixed; top:18px; right:18px; z-index:50;
+    display:flex; gap:6px;
+    background:var(--paper-raised);
+    border:1px solid var(--path-color);
+    border-radius:999px; padding:4px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.07);
+  }
+  .lang-switch button{
+    border:none; background:transparent; color:var(--muted);
+    font-family:'Karla',sans-serif; font-size:13px;
+    padding:7px 13px; border-radius:999px; cursor:pointer;
+    transition:background .2s ease, color .2s ease;
+  }
+  .lang-switch button.active{ background:var(--pine); color:var(--paper-raised); }
+  .lang-switch button:focus-visible{ outline:2px solid var(--pine); outline-offset:2px; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    max-width:820px;
+    margin:0 auto;
+    padding:120px 8vw 40px;
+    text-align:center;
+  }
+  .hero .sunburst{
+    width:72px; height:72px; margin:0 auto 22px;
+    color:var(--gold);
+  }
+  .hero .kicker{
+    font-size:14px; color:var(--pine); display:block; margin-bottom:16px;
+  }
+  .hero h1{
+    font-size:clamp(2rem, 5.4vw, 3.4rem);
+    line-height:1.18; margin:0 0 22px;
+  }
+  .hero p{
+    font-size:clamp(1.02rem, 1.9vw, 1.2rem);
+    line-height:1.65; color:var(--muted);
+    max-width:560px; margin:0 auto;
+  }
+
+  .stats{
+    display:flex; justify-content:center; align-items:center;
+    gap:14px; flex-wrap:wrap;
+    margin-top:36px; font-size:14px; color:var(--muted);
+  }
+  .stats b{ color:var(--pine); font-weight:600; }
+  .stats .sep{ color:var(--path-color); }
+
+  .hero-path{
+    max-width:520px; margin:44px auto 0; color:var(--path-color);
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline{
+    position:relative;
+    max-width:900px;
+    margin:20px auto 0;
+    padding:20px 6vw 20px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:50%; top:0; bottom:0;
+    border-left:3px dashed var(--path-color);
+    transform:translateX(-50%);
+  }
+
+  .milestone{
+    display:grid;
+    grid-template-columns: 1fr 68px 1fr;
+    align-items:start;
+    column-gap:26px;
+    margin-bottom:56px;
+    opacity:0; transform:translateY(16px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .milestone.in-view{ opacity:1; transform:translateY(0); }
+
+  .milestone .icon-badge{
+    grid-column:2;
+    justify-self:center;
+    width:68px; height:68px; border-radius:50%;
+    background:var(--paper-raised);
+    border:2px solid var(--pine);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--pine);
+    position:relative; z-index:2;
+  }
+  .milestone.closed .icon-badge{ border-color:var(--rose); color:var(--rose); }
+
+  .milestone .card{
+    grid-column:1;
+    background:var(--paper-raised);
+    border-radius:20px;
+    padding:24px 26px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.04);
+  }
+  .milestone:nth-child(even) .card{ grid-column:3; }
+  .milestone.closed .card{ background:var(--rose-soft); }
+
+  .card .kicker{ font-size:12.5px; color:var(--gold); display:block; margin-bottom:6px; }
+  .milestone.closed .card .kicker{ color:var(--rose); }
+  .card h2{ font-size:clamp(1.2rem, 2vw, 1.5rem); margin:0 0 10px; line-height:1.25; }
+  .card p{ font-size:1rem; line-height:1.65; color:var(--ink); margin:0; }
+
+  @media (max-width:820px){
+    .timeline::before{ left:33px; }
+    .milestone{ grid-template-columns: 66px 1fr; column-gap:18px; }
+    .milestone .icon-badge{ grid-column:1; width:56px; height:56px; }
+    .milestone .card, .milestone:nth-child(even) .card{ grid-column:2; }
+    .icon{ width:24px; height:24px; }
+  }
+
+  /* ---------- Closing / final ---------- */
+  .closing{
+    max-width:680px; margin:20px auto 0; padding:20px 8vw 0;
+  }
+  .closing-box{
+    background:var(--pine-soft);
+    border-radius:22px;
+    padding:34px 32px;
+  }
+  .closing-box .icon{ color:var(--pine); width:26px; height:26px; margin-bottom:14px; }
+  .closing-box h2{ font-size:1.3rem; margin:0 0 12px; }
+  .closing-box p{ font-size:1.02rem; line-height:1.7; color:var(--ink); margin:0; }
+
+  .final{
+    max-width:680px; margin:0 auto; padding:56px 8vw 140px; text-align:center;
+  }
+  .final .kicker{ font-size:13px; color:var(--gold); display:block; margin-bottom:14px; }
+  .final p{
+    font-family:'Fraunces', serif; font-style:italic;
+    font-size:clamp(1.4rem, 3vw, 1.9rem);
+    line-height:1.55; color:var(--ink); margin:0;
+  }
+  body[data-lang="hi"] .final p, body[data-lang="mr"] .final p{
+    font-family:'Noto Serif Devanagari', serif; font-style:normal;
+  }
+
+  footer{
+    max-width:900px; margin:0 auto; padding:0 8vw 60px;
+    color:var(--muted); font-size:13px; text-align:center;
+  }
+  footer .rule{ height:1px; background:var(--path-color); margin-bottom:22px; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .milestone{ transition:none; opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body data-lang="en">
+
+<nav class="lang-switch" aria-label="Language">
+  <button data-lang-btn="en" class="active">EN</button>
+  <button data-lang-btn="hi">हिंदी</button>
+  <button data-lang-btn="mr">मराठी</button>
+</nav>
+
+<section class="hero">
+  <svg class="sunburst" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <circle cx="24" cy="24" r="8"/>
+    <path d="M24 4v6M24 38v6M4 24h6M38 24h6M9.5 9.5l4.2 4.2M34.3 34.3l4.2 4.2M9.5 38.5l4.2-4.2M34.3 13.7l4.2-4.2"/>
+  </svg>
+  <span class="kicker headline-font" data-i18n="hero.kicker"></span>
+  <h1 data-i18n="hero.title"></h1>
+  <p data-i18n="hero.subtitle"></p>
+  <div class="stats">
+    <span><b data-i18n="stats.a"></b></span><span class="sep">·</span>
+    <span><b data-i18n="stats.b"></b></span><span class="sep">·</span>
+    <span><b data-i18n="stats.c"></b></span>
+  </div>
+  <svg class="hero-path" viewBox="0 0 520 60" fill="none">
+    <path d="M6 40 Q100 8 200 34 T400 26 Q460 20 514 42" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 11"/>
+    <circle cx="6" cy="40" r="4" fill="currentColor"/>
+    <circle cx="514" cy="42" r="4" fill="currentColor"/>
+  </svg>
+</section>
+
+<div class="timeline" id="timeline"></div>
+
+<section class="closing">
+  <div class="closing-box">
+    <svg class="icon" viewBox="0 0 48 48" fill="currentColor"><path d="M14 24c0-6 4-11 10-13l1 3c-4 1.6-6.5 4.6-7 8h6v10H14v-8zm18 0c0-6 4-11 10-13l1 3c-4 1.6-6.5 4.6-7 8h6v10H32v-8z"/></svg>
+    <h2 data-i18n="closing.heading"></h2>
+    <p data-i18n="closing.text"></p>
+  </div>
+</section>
+
+<section class="final">
+  <span class="kicker headline-font" data-i18n="final.heading"></span>
+  <p data-i18n="final.text"></p>
+</section>
+
+<footer>
+  <div class="rule"></div>
+  <span data-i18n="footer.text"></span>
+</footer>
+
+<script>
+const icons = {
+  home: `<svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 22 L24 9 L40 22"/><path d="M13 20 V39 H35 V20"/><path d="M20 39 V28 H28 V39"/>
+    <circle cx="37" cy="10" r="2.6"/><path d="M37 4 V6M37 14 V16M31 10 H33M41 10 H43M32.8 5.8 L34.2 7.2M39.8 12.8 L41.2 14.2M32.8 14.2 L34.2 12.8M39.8 7.2 L41.2 5.8"/>
+  </svg>`,
+  book: `<svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M24 13 C20 10 13 10 9 12 V35 C13 33 20 33 24 36 C28 33 35 33 39 35 V12 C35 10 28 10 24 13 Z"/><path d="M24 13 V36"/>
+  </svg>`,
+  gear: `<svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+    <circle cx="24" cy="24" r="8.5"/><circle cx="24" cy="24" r="3"/>
+    <path d="M24 6v6M24 36v6M6 24h6M36 24h6M11.5 11.5l4 4M32.5 32.5l4 4M11.5 36.5l4-4M32.5 15.5l4-4"/>
+  </svg>`,
+  briefcase: `<svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="9" y="18" width="30" height="20" rx="3"/><path d="M18 18 V13 a3 3 0 0 1 3-3 h6 a3 3 0 0 1 3 3 V18"/><line x1="9" y1="27" x2="39" y2="27"/>
+  </svg>`,
+  door: `<svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+    <rect x="14" y="7" width="20" height="35" rx="1.5"/><circle cx="27" cy="25" r="1.6" fill="currentColor" stroke="none"/><line x1="8" y1="42" x2="40" y2="42"/>
+  </svg>`,
+  plane: `<svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M6 25 L42 9 L27 42 L22 26 L6 25 Z"/><path d="M22 26 L42 9"/>
+  </svg>`,
+  train: `<svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="10" y="16" width="28" height="19" rx="6"/><line x1="10" y1="24" x2="38" y2="24"/>
+    <circle cx="17" cy="39" r="2.4" fill="currentColor" stroke="none"/><circle cx="31" cy="39" r="2.4" fill="currentColor" stroke="none"/>
+    <path d="M24 12 C22 9 17 9 17 13 C17 16 24 20 24 20 C24 20 31 16 31 13 C31 9 26 9 24 12 Z" fill="currentColor" stroke="none"/>
+  </svg>`,
+  cap: `<svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M24 12 L4 21 L24 30 L44 21 Z"/><path d="M14 25 V33 C14 36 34 36 34 33 V25"/><path d="M44 21 V30"/>
+    <circle cx="44" cy="32" r="1.8" fill="currentColor" stroke="none"/>
+  </svg>`
+};
+
+const content = {
+  en: {
+    hero: {
+      kicker: "A true story, told simply",
+      title: "From a small polytechnic in Pune to an American university",
+      subtitle: "This is the story of an ordinary boy who kept believing in the next step — even when doors closed, an ocean came between him and home, and nothing was guaranteed."
+    },
+    stats: { a:"3 countries", b:"2 continents", c:"1 boy who never stopped believing" },
+    stations: [
+      { icon:"home", kicker:"Where it all began", heading:"Dhankawadi, Pune", text:"He was just an ordinary boy from a Pune neighbourhood called Dhankawadi. No famous school, no shortcuts, no guarantee that life would take him anywhere special. What he had was simple: discipline, curiosity, and a quiet belief that education could open doors nobody in his family had opened before." },
+      { icon:"book", kicker:"His first step forward", heading:"A diploma at a polytechnic college in Pune", text:"After school, he joined a polytechnic college in Pune to study engineering. It wasn't a famous name — just a small, practical first step. But it was the first brick of a foundation he didn't yet know he was building." },
+      { icon:"gear", kicker:"Building the foundation", heading:"An engineering degree from a Pune university college", text:"From there, he moved on to a full engineering degree, at a college affiliated with a university in Pune (Savitribai Phule Pune University). Step by step, an ordinary student quietly became one of the best in his class." },
+      { icon:"briefcase", kicker:"Stepping into the world", heading:"His first job, at Accenture", text:"He earned a place at Accenture, one of the world's largest IT companies, and began his career. For a while, everything seemed to be going exactly to plan." },
+      { icon:"door", kicker:"When a door closed", heading:"A plan to move to Canada falls through", text:"Then came a setback nobody warns you about: his plan to move to Canada didn't work out. For a while, the future he had imagined simply disappeared. But he made a choice that would define everything after — he refused to let one closed door become the end of his story.", closed:true },
+      { icon:"plane", kicker:"Starting over, far from home", heading:"He moves to Japan instead", text:"He packed up and moved to Japan — a country with a different language, different customs, a completely different way of life. There were lonely nights, moments of doubt, rejection before acceptance. Slowly, patiently, a foreign country began to feel like home." },
+      { icon:"train", kicker:"A life, quietly built", heading:"A permanent job at a Japanese railway company, marriage, a home", text:"In time, he became a permanent employee of Shizuoka Railway, a real, stable Japanese company. He built a career, fell in love and got married, and made a home in a country that once felt entirely foreign. And even after finding the stability most people spend a lifetime chasing, he kept studying and kept growing." },
+      { icon:"cap", kicker:"A dream comes true", heading:"Admission to an American university, while still living in Japan", text:"While still living and working in Japan, he was accepted into a master's program at the University of Illinois Urbana-Champaign — a well-known American university, ranked among the top 50 to 75 in the world. The boy from a small polytechnic in Pune was now headed to one of the world's great universities." }
+    ],
+    closing: { heading:"Looking back", text:"None of this was planned in advance. There were setbacks, wrong turns, and plenty of sleepless nights of doubt. But maybe that's exactly what makes it beautiful. A single failure didn't end his journey — it simply changed the route. Leaving home didn't mean losing it — it meant learning to build a new one. Real progress rarely arrives in one dramatic leap. It arrives quietly, one honest decision at a time." },
+    final: { heading:"A message, for you", text:"Your beginning can be ordinary. It doesn't need a famous school, a perfect plan, or any guarantee of success. All it needs is one small, honest step — and then another. Keep moving. Your story is still being written." },
+    footer: { text:"A story of an ordinary boy, told with love — in English, Hindi, and Marathi." }
+  },
+  hi: {
+    hero: {
+      kicker:"एक सच्ची कहानी, सीधे शब्दों में",
+      title:"पुणे के एक छोटे पॉलिटेक्निक कॉलेज से एक अमेरिकी विश्वविद्यालय तक",
+      subtitle:"यह एक ऐसे आम लड़के की कहानी है जिसने अगले कदम पर भरोसा करना कभी नहीं छोड़ा — चाहे दरवाज़े बंद हों, समंदर उसे घर से दूर कर दे, या कुछ भी तय न हो।"
+    },
+    stats:{ a:"3 देश", b:"2 महाद्वीप", c:"1 लड़का जिसने कभी हार नहीं मानी" },
+    stations:[
+      { icon:"home", kicker:"जहाँ से सब शुरू हुआ", heading:"धनकवाडी, पुणे", text:"वह पुणे के धनकवाडी इलाके का एक बिल्कुल आम लड़का था। न कोई मशहूर स्कूल, न कोई शॉर्टकट, न ही यह गारंटी कि ज़िंदगी उसे कहीं खास ले जाएगी। उसके पास बस इतना था — अनुशासन, जिज्ञासा, और यह शांत विश्वास कि शिक्षा उसके लिए वे दरवाज़े खोल सकती है, जो उसके परिवार में पहले कभी किसी ने नहीं खोले थे।" },
+      { icon:"book", kicker:"उसका पहला कदम", heading:"पुणे के एक पॉलिटेक्निक कॉलेज से डिप्लोमा", text:"स्कूल के बाद, उसने इंजीनियरिंग पढ़ने के लिए पुणे के एक पॉलिटेक्निक कॉलेज में दाख़िला लिया। कोई बड़ा नाम नहीं था — बस एक छोटा, व्यावहारिक कदम। पर यही उस नींव की पहली ईंट बना, जिसे बनते हुए उसे खुद पता भी नहीं था।" },
+      { icon:"gear", kicker:"नींव मज़बूत होती गई", heading:"पुणे के एक विश्वविद्यालय-संबद्ध कॉलेज से इंजीनियरिंग डिग्री", text:"वहाँ से वह पुणे के एक विश्वविद्यालय (सावित्रीबाई फुले पुणे विश्वविद्यालय) से संबद्ध कॉलेज में पूरी इंजीनियरिंग डिग्री करने पहुँचा। धीरे-धीरे, एक आम छात्र चुपचाप अपनी क्लास के सबसे अच्छे छात्रों में शामिल हो गया।" },
+      { icon:"briefcase", kicker:"दुनिया में पहला कदम", heading:"पहली नौकरी, एक्सेंचर में", text:"उसे दुनिया की सबसे बड़ी आईटी कंपनियों में से एक, एक्सेंचर में जगह मिली, और उसका करियर शुरू हुआ। कुछ समय के लिए सब कुछ ठीक उसी तरह हो रहा था जैसा उसने सोचा था।" },
+      { icon:"door", kicker:"जब एक दरवाज़ा बंद हुआ", heading:"कनाडा जाने की योजना पूरी नहीं हो सकी", text:"फिर आया एक ऐसा झटका, जिसके बारे में कोई पहले से नहीं बताता — कनाडा जाने की उसकी योजना पूरी नहीं हो सकी। कुछ समय के लिए, जो भविष्य उसने सोचा था, वह पूरी तरह ग़ायब हो गया। पर उसने एक फैसला लिया, जिसने आगे सब कुछ बदल दिया — उसने एक बंद दरवाज़े को अपनी पूरी कहानी का अंत नहीं बनने दिया।", closed:true },
+      { icon:"plane", kicker:"घर से दूर, नई शुरुआत", heading:"इसकी बजाय, वह जापान चला गया", text:"उसने अपना सामान बाँधा और जापान चला गया — एक ऐसा देश, जिसकी भाषा अलग थी, रीति-रिवाज़ अलग थे, और जीने का तरीका पूरी तरह अलग था। वहाँ अकेली रातें थीं, शक के पल थे, स्वीकार किए जाने से पहले ठुकराए जाने के अनुभव थे। धीरे-धीरे, सब्र के साथ, एक पराया देश उसका घर बनने लगा।" },
+      { icon:"train", kicker:"चुपचाप बसती हुई ज़िंदगी", heading:"जापान की एक रेलवे कंपनी में स्थायी नौकरी, शादी, अपना घर", text:"समय के साथ, वह शिज़ुओका रेलवे का स्थायी कर्मचारी बन गया — एक असली, स्थिर जापानी कंपनी में। उसने करियर बनाया, प्यार किया, शादी की, और उस देश में अपना घर बसाया जो कभी उसे पूरी तरह अजनबी लगता था। और स्थिरता पाने के बाद भी — जिसे पाने में ज़्यादातर लोगों की पूरी ज़िंदगी लग जाती है — उसने सीखना और आगे बढ़ना बंद नहीं किया।" },
+      { icon:"cap", kicker:"एक सपना सच हुआ", heading:"जापान में रहते हुए ही, एक अमेरिकी विश्वविद्यालय में दाख़िला", text:"जापान में रहते और काम करते हुए ही, उसे यूनिवर्सिटी ऑफ़ इलिनॉय अर्बाना-शैम्पेन के मास्टर्स प्रोग्राम में दाख़िला मिला — एक जानी-मानी अमेरिकी यूनिवर्सिटी, जो दुनिया की टॉप 50 से 75 यूनिवर्सिटीज़ में गिनी जाती है। पुणे के एक छोटे पॉलिटेक्निक कॉलेज से शुरू हुआ यह लड़का अब दुनिया की एक बेहतरीन यूनिवर्सिटी की ओर बढ़ रहा था।" }
+    ],
+    closing:{ heading:"पीछे मुड़कर देखने पर", text:"यह सब पहले से तय नहीं था। रास्ते में असफलताएँ थीं, गलत मोड़ थे, और शक से भरी कई रातें थीं। पर शायद यही इसे इतना खूबसूरत बनाता है। एक असफलता ने उसका सफ़र खत्म नहीं किया — उसने बस रास्ता बदल दिया। घर छोड़ना, घर खोना नहीं था — यह एक नया घर बनाना सीखना था। और असली तरक़्क़ी शायद ही कभी एक बड़ी छलांग में आती है — वह चुपचाप, एक ईमानदार फैसले के साथ आती है।" },
+    final:{ heading:"आपके लिए एक संदेश", text:"आपकी शुरुआत साधारण हो सकती है। इसके लिए किसी मशहूर स्कूल, परफेक्ट प्लान, या सफलता की गारंटी की ज़रूरत नहीं। बस एक छोटा, ईमानदार कदम चाहिए — फिर एक और। चलते रहिए। आपकी कहानी अभी भी लिखी जा रही है।" },
+    footer:{ text:"एक आम लड़के की कहानी, प्यार से कही गई — अंग्रेज़ी, हिंदी और मराठी में।" }
+  },
+  mr: {
+    hero:{
+      kicker:"एक खरीखुरी गोष्ट, साध्या शब्दांत",
+      title:"पुण्यातल्या एका छोट्या पॉलिटेक्निक कॉलेजपासून अमेरिकन विद्यापीठापर्यंत",
+      subtitle:"ही गोष्ट आहे एका सर्वसामान्य मुलाची, ज्याने पुढच्या पावलावर विश्वास ठेवणं कधीच सोडलं नाही — मग दार बंद झालं असो, समुद्र घरापासून दूर करत असो, किंवा काहीच निश्चित नसो."
+    },
+    stats:{ a:"3 देश", b:"2 खंड", c:"1 मुलगा जो कधीच हरला नाही" },
+    stations:[
+      { icon:"home", kicker:"जिथून सगळं सुरू झालं", heading:"धनकवाडी, पुणे", text:"तो पुण्यातल्या धनकवाडी भागातला अगदी सर्वसामान्य मुलगा होता. कोणतीही प्रसिद्ध शाळा नाही, कोणताही शॉर्टकट नाही, आणि आयुष्य त्याला कुठे घेऊन जाईल याची खात्रीही नाही. त्याच्याकडे फक्त एवढंच होतं — शिस्त, जिज्ञासा, आणि हा शांत विश्वास की शिक्षण त्याच्यासाठी अशी दारं उघडू शकतं, जी त्याच्या कुटुंबात याआधी कोणीच उघडली नव्हती." },
+      { icon:"book", kicker:"त्याचं पहिलं पाऊल", heading:"पुण्यातल्या एका पॉलिटेक्निक कॉलेजमधून डिप्लोमा", text:"शाळेनंतर, इंजिनिअरिंग शिकण्यासाठी त्याने पुण्यातल्या एका पॉलिटेक्निक कॉलेजमध्ये प्रवेश घेतला. कोणतंही मोठं नाव नव्हतं — फक्त एक छोटं, व्यवहार्य पाऊल. पण पुढे जाऊन ती एका मोठ्या पायाभरणीची पहिली वीट ठरली." },
+      { icon:"gear", kicker:"पाया भक्कम होत गेला", heading:"पुण्यातल्या विद्यापीठ-संलग्न कॉलेजमधून इंजिनिअरिंग पदवी", text:"तिथून तो पुण्यातल्या एका विद्यापीठाशी (सावित्रीबाई फुले पुणे विद्यापीठ) संलग्न असलेल्या कॉलेजमध्ये पूर्ण इंजिनिअरिंग पदवीसाठी गेला. हळूहळू, एक सर्वसामान्य विद्यार्थी शांतपणे आपल्या वर्गातल्या सर्वोत्तम विद्यार्थ्यांमध्ये सामील झाला." },
+      { icon:"briefcase", kicker:"जगात पहिलं पाऊल", heading:"पहिली नोकरी, अ‍ॅक्सेंचरमध्ये", text:"त्याला जगातील सर्वात मोठ्या आयटी कंपन्यांपैकी एक असलेल्या अ‍ॅक्सेंचरमध्ये संधी मिळाली, आणि त्याच्या करिअरला सुरुवात झाली. काही काळासाठी सगळं अगदी त्याने ठरवल्याप्रमाणे घडत होतं." },
+      { icon:"door", kicker:"जेव्हा एक दार बंद झालं", heading:"कॅनडाला जाण्याची योजना यशस्वी झाली नाही", text:"मग आला एक असा धक्का, ज्याबद्दल आधी कोणीच सांगत नाही — कॅनडाला जाण्याची त्याची योजना यशस्वी झाली नाही. काही काळासाठी, त्याने कल्पिलेलं भविष्य पूर्णपणे नाहीसं झालं. पण त्याने असा निर्णय घेतला, ज्याने पुढचं सगळं बदलून टाकलं — त्याने एका बंद दाराला त्याच्या संपूर्ण प्रवासाचा शेवट ठरू दिलं नाही.", closed:true },
+      { icon:"plane", kicker:"घरापासून दूर, नवी सुरुवात", heading:"त्याऐवजी तो जपानला गेला", text:"त्याने आपलं सामान बांधलं आणि तो जपानला गेला — जिथली भाषा वेगळी होती, रीतीरिवाज वेगळे होते, आणि जगण्याची पद्धतही पूर्णपणे वेगळी होती. तिथे एकट्याच्या रात्री होत्या, शंकेचे क्षण होते, स्वीकारलं जाण्याआधी नाकारलं जाण्याचेही अनुभव होते. हळूहळू, संयमाने, एक परका देश त्याचं घर बनू लागला." },
+      { icon:"train", kicker:"शांतपणे उभं राहिलेलं आयुष्य", heading:"जपानच्या एका रेल्वे कंपनीत कायमस्वरूपी नोकरी, लग्न, स्वतःचं घर", text:"काळाच्या ओघात, तो शिझुओका रेल्वेचा कायमस्वरूपी कर्मचारी बनला — एका खऱ्याखुऱ्या, स्थिर जपानी कंपनीत. त्याने करिअर घडवलं, प्रेमात पडला, लग्न केलं, आणि जो देश एकेकाळी त्याला पूर्णपणे परका वाटत होता, तिथे त्याने स्वतःचं घर उभं केलं. आणि बहुतेक लोकांना आयुष्यभर हवं असणारं स्थैर्य मिळाल्यानंतरही, त्याने शिकणं आणि पुढे जाणं थांबवलं नाही." },
+      { icon:"cap", kicker:"एक स्वप्न पूर्ण झालं", heading:"जपानमध्ये राहत असतानाच, अमेरिकन विद्यापीठात प्रवेश", text:"जपानमध्ये राहत आणि काम करत असतानाच, त्याला युनिव्हर्सिटी ऑफ इलिनॉय अर्बाना-शॅम्पेनच्या मास्टर्स प्रोग्राममध्ये प्रवेश मिळाला — एक सुप्रसिद्ध अमेरिकन विद्यापीठ, जी जगातील टॉप 50 ते 75 विद्यापीठांमध्ये गणली जाते. पुण्यातल्या एका छोट्या पॉलिटेक्निक कॉलेजपासून सुरू झालेला हा मुलगा आता जगातील एका उत्कृष्ट विद्यापीठाकडे निघाला होता." }
+    ],
+    closing:{ heading:"मागे वळून पाहताना", text:"हे सगळं आधीपासून ठरलेलं नव्हतं. वाटेत अपयश होतं, चुकीची वळणं होती, आणि शंकेने भरलेल्या अनेक रात्री होत्या. पण कदाचित हेच याला इतकं सुंदर बनवतं. एका अपयशाने त्याचा प्रवास संपवला नाही — त्याने फक्त मार्ग बदलला. घर सोडणं म्हणजे घर गमावणं नव्हतं — ते एक नवीन घर उभारायला शिकणं होतं. आणि खरी प्रगती क्वचितच एका मोठ्या झेपेत येते — ती शांतपणे, एका प्रामाणिक निर्णयासोबत येते." },
+    final:{ heading:"तुमच्यासाठी एक संदेश", text:"तुमची सुरुवात सामान्य असू शकते. त्यासाठी कोणत्याही प्रसिद्ध शाळेची, परिपूर्ण योजनेची, किंवा यशाच्या हमीची गरज नाही. फक्त एक छोटं, प्रामाणिक पाऊल हवं — आणि मग आणखी एक. पुढे चालत राहा. तुमची गोष्ट अजूनही लिहिली जात आहे." },
+    footer:{ text:"एका सर्वसामान्य मुलाची गोष्ट, प्रेमाने सांगितलेली — इंग्रजी, हिंदी आणि मराठीत." }
+  }
+};
+
+function renderStations(lang){
+  const wrap = document.getElementById('timeline');
+  wrap.innerHTML = '';
+  content[lang].stations.forEach((s, i)=>{
+    const el = document.createElement('div');
+    el.className = 'milestone' + (s.closed ? ' closed' : '');
+    el.innerHTML = `
+      <div class="card">
+        <span class="kicker headline-font">${s.kicker}</span>
+        <h2>${s.heading}</h2>
+        <p>${s.text}</p>
+      </div>
+      <div class="icon-badge">${icons[s.icon]}</div>
+    `;
+    wrap.appendChild(el);
+  });
+  observeMilestones();
+}
+
+function setLang(lang){
+  document.body.setAttribute('data-lang', lang);
+  document.documentElement.setAttribute('lang', lang);
+  document.querySelectorAll('[data-lang-btn]').forEach(b=>{
+    b.classList.toggle('active', b.dataset.langBtn === lang);
+  });
+  const c = content[lang];
+  document.querySelector('[data-i18n="hero.kicker"]').textContent = c.hero.kicker;
+  document.querySelector('[data-i18n="hero.title"]').textContent = c.hero.title;
+  document.querySelector('[data-i18n="hero.subtitle"]').textContent = c.hero.subtitle;
+  document.querySelector('[data-i18n="stats.a"]').textContent = c.stats.a;
+  document.querySelector('[data-i18n="stats.b"]').textContent = c.stats.b;
+  document.querySelector('[data-i18n="stats.c"]').textContent = c.stats.c;
+  document.querySelector('[data-i18n="closing.heading"]').textContent = c.closing.heading;
+  document.querySelector('[data-i18n="closing.text"]').textContent = c.closing.text;
+  document.querySelector('[data-i18n="final.heading"]').textContent = c.final.heading;
+  document.querySelector('[data-i18n="final.text"]').textContent = c.final.text;
+  document.querySelector('[data-i18n="footer.text"]').textContent = c.footer.text;
+  renderStations(lang);
+  try{ localStorage.setItem('journey-lang', lang); }catch(e){}
+}
+
+document.querySelectorAll('[data-lang-btn]').forEach(btn=>{
+  btn.addEventListener('click', ()=> setLang(btn.dataset.langBtn));
+});
+
+let observer;
+function observeMilestones(){
+  const items = document.querySelectorAll('.milestone');
+  if(observer) observer.disconnect();
+  observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { threshold:0.2 });
+  items.forEach(i=>observer.observe(i));
+}
+
+let initialLang = 'en';
+try{
+  const saved = localStorage.getItem('journey-lang');
+  if(saved && content[saved]) initialLang = saved;
+}catch(e){}
+setLang(initialLang);
+</script>
+
+</body>
+</html>
